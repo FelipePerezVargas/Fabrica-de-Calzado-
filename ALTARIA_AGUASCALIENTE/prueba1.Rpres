@@ -1,0 +1,61 @@
+Reporte de Resultados Tiendas 
+========================================================
+author: Felipe Pérez Vargas
+date: 
+autosize: true
+
+ALTARIA AGUASCALIENTES
+========================================================
+```{r, echo=FALSE}
+rm(list=ls())  
+library ('shiny')
+library("dplyr")
+library('ggplot2')
+library(plotly)
+library(RMySQL)
+setwd('/Users/Admin/Documents/Perugia/Reportes_Tiedas/ALTARIA_AGUASCALIENTE')
+
+database <- dbConnect(MySQL(),
+                      dbname = "vincom",
+                      host = "50.116.110.193",
+                      user = 'vincom',
+                      password = '.lyA35C0Ve[cL2',
+                      port = 3306
+)
+
+v1<-dbGetQuery(database,statement = 'select * FROM ventas')
+v1$fecha <- as.Date(v1$fecha)
+
+f1<-filter(v1,v1[,3]>='2020/02/25' &  v1[,3]<='2020/03/02', v1[,5]=='DAMA MEXICO', 
+           v1[,2]=='ALTARIA AGUASCALIENTES' )
+
+```
+
+
+
+Venta de Pares por Semana
+========================================================
+type:section
+
+Venta pares por semana 25/feb/2020 hasta 02/mar/2020
+```{r, echo=FALSE,fig.align='center'}
+ggplot(f1) +
+  geom_bar(aes(x =f1[,3]))+
+  theme(axis.text.x=element_text(angle=90, hjust=1))+
+  labs(title ="Venta Pares Semana ",
+       subtitle = "",
+       x = "Fecha", y = "Pares Vendidos")+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+library(ggplot2)
+ ggplot(cars) +
+  geom_line(aes(x=dist,y=speed))
+library(plotly)
+#ggplotly(plot1)
+```

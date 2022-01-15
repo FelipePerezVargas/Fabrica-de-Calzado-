@@ -1,0 +1,123 @@
+---
+
+title: "Resultados"
+author: Felipe Pérez Vargas
+date: Marzo
+output: beamer_presentation
+ theme: "AnnArbor"
+    colortheme: "dolphin"
+    fonttheme: "structurebold"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())  
+library ('shiny')
+library("dplyr")
+library('ggplot2')
+library(plotly)
+library(RMySQL)
+setwd('/Users/Admin/Documents/Perugia/Reportes_Tiedas/ALTARIA_AGUASCALIENTE')
+
+database <- dbConnect(MySQL(),
+                      dbname = "vincom",
+                      host = "50.116.110.193",
+                      user = 'vincom',
+                      password = '.lyA35C0Ve[cL2',
+                      port = 3306
+)
+v1<-dbGetQuery(database,statement = 'select * FROM ventas');v1
+v1$fecha <- as.Date(v1$fecha)
+f1<-filter(v1,v1[,3]>='2020/02/25' &  v1[,3]<='2020/03/02', v1[,5]=='DAMA MEXICO', 
+           v1[,2]=='ALTARIA AGUASCALIENTES' )
+
+```
+
+## Ventas Por semana 
+```{r echo=FALSE}
+f2<-ggplot(f1) +
+  geom_bar(aes(x =f1[,3]))+
+  theme(axis.text.x=element_text(angle=90, hjust=1))+
+  labs(title ="Venta Pares Semana ",
+       subtitle = "",
+       x = "Fecha", y = "Pares Vendidos")+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+f2<-ggplotly(f2);f2
+sum(f1[,15])
+
+```
+
+## Ventas po Precio
+
+```{r , echo=FALSE}
+precios<-data.frame(f1[,3], round(f1[,17], 0))
+f3<-ggplot(precios) +
+  geom_bar(aes(x =precios[,2]))+
+  labs(title ="Precios de Venta  ",
+       subtitle = "",
+       x = "Rango de Precios", y = "Número de Transacciones")+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+f3<-ggplotly(f3);f3
+```
+## Ventas por Descuento Aplicado
+```{r , echo=FALSE}
+descu<-data.frame(f1[,3], round(f1[,14], 0))
+f4<-ggplot(descu) +
+  geom_bar(aes(x =descu[,2]))+
+  labs(title ="Descuentos Aplicados  ",
+       subtitle = "",
+       x = "Rango de Precios", y = "Número de Transacciones")+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+f4<-ggplotly(f4);f4
+
+```
+## 
+```{r , echo=FALSE}
+costo<-data.frame(f1[,3], round(f1[,18], 0))
+f5<-ggplot(costo) +
+  geom_bar(aes(x =costo[,2]))+
+  labs(title ="Precios de Costo  ",
+       subtitle = "",
+       x = "Rango de Precios", y = "Número de Pares")+
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+f5<-ggplotly(f5);f5
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+##
+```{r , echo=FALSE}
+```
+
